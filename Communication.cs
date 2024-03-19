@@ -238,8 +238,13 @@ namespace ut64configurator
                                 if (isDatasave == true)
                                 {
                                     string str1 = gyro1.getValue(Macro.RUNTIME_FIELD_AMP_CHA).ToString("0.000");
-                                    string str2 = gyro1.getValue(Macro.RUNTIME_FIELD_AMP_CHB).ToString("0.000");
-                                    dataSavestr = dataSavestr + str2 + "," + str1 + "\r\n";
+                                    string str2 = gyro1.getValue(Macro.RUNTIME_FIELD_AMP_CHA_I).ToString("0.000");
+                                    string str3 = gyro1.getValue(Macro.RUNTIME_FIELD_AMP_CHA_Q).ToString("0.000");
+
+                                    string str4 = gyro1.getValue(Macro.RUNTIME_FIELD_AMP_CHB).ToString("0.000");
+                                    string str5 = gyro1.getValue(Macro.RUNTIME_FIELD_AMP_CHB_I).ToString("0.000");
+                                    string str6 = gyro1.getValue(Macro.RUNTIME_FIELD_AMP_CHB_Q).ToString("0.000");                              
+                                    dataSavestr = dataSavestr + str1 + "," + str2 + "," + str3 + "," + str4 + "," + str5 + "," + str6 + "\r\n";
                                 }
 
                                 switch (SerialRevDATA[55])
