@@ -442,6 +442,7 @@ namespace ut64configurator
                     PLL_relativeerror_textBox.Text = gyro1.getValue(Macro.RUNTIME_FIELD_PLL_CURRENT_ERROR).ToString("0.000");
                     //WAM
                     pidEVpowerG1_textBox.Text = gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_EV).ToString("0.000");
+                    pidEAangelG1_textBox.Text = gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_EA).ToString("0.000");
                     break;
                 case 6:
                     gyroBuffer1.getValue(Macro.RUNTIME_PID_CURRENT_ERROR).CopyTo(gyroPaint1.PID_error_Amp_array, 0);
