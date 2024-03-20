@@ -285,6 +285,7 @@ namespace ut64configurator
 
                                         //WAM
                                         gyro1.setValue(Macro.RUNTIME_FIELD_FULLANGEL_EV, deserialized_to_32(SerialRevDATA, 43));
+                                        gyro1.setValue(Macro.RUNTIME_FIELD_FULLANGEL_EA, deserialized_to_32(SerialRevDATA, 47)/1000.0);
                                         dataType = 2;
                                         break;
                                     case 16:
