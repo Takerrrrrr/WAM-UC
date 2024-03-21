@@ -244,7 +244,7 @@ namespace ut64configurator
                                     string str4 = gyro1.getValue(Macro.RUNTIME_FIELD_AMP_CHB).ToString("0.000");
                                     string str5 = gyro1.getValue(Macro.RUNTIME_FIELD_AMP_CHB_I).ToString("0.000");
                                     string str6 = gyro1.getValue(Macro.RUNTIME_FIELD_AMP_CHB_Q).ToString("0.000");                              
-                                    dataSavestr = dataSavestr + str1 + "," + str2 + "," + str3 + "," + str4 + "," + str5 + "," + str6 + "\r\n";
+                                    dataSavestr = dataSavestr + str1 + "\t" + str2 + "\t" + str3 + "\t" + str4 + "\t" + str5 + "\t" + str6 + "\t";
                                 }
 
                                 switch (SerialRevDATA[55])
@@ -315,12 +315,11 @@ namespace ut64configurator
                                         gyroBuffer1.setValue(Macro.RUNTIME_PID_CURRENT_OUTPUT, gyro1.getValue(Macro.RUNTIME_PID_CURRENT_OUTPUT));
 
                                         if (isDatasave == true)
-                                        {
-                                            string str1 = gyro1.getValue(Macro.RUNTIME_FIELD_AMP_CHB_I).ToString("0.000");
-                                            string str2 = gyro1.getValue(Macro.RUNTIME_PID_CURRENT_OUTPUT).ToString("0.000");
+                                        {                                          
+                                            string str1 = gyro1.getValue(Macro.RUNTIME_PID_CURRENT_OUTPUT).ToString("0.000");
 
 
-                                            dataSavestr = dataSavestr + str2 + "," + str1 + "\r\n";
+                                            dataSavestr = dataSavestr + str1 + "\r\n";
 
 
                                         }
@@ -366,7 +365,7 @@ namespace ut64configurator
                                             string str2 = gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_EV).ToString("0.000");
                                             string str3 = gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_QV).ToString("0.000");
 
-                                            dataSavestr = dataSavestr + str1 + "," + str2 + "," + str3 + "\r\n";
+                                            dataSavestr = dataSavestr + str1 + "\t" + str2 + "\t" + str3 + "\r\n";
                                         }
 
                                         dataType = 19;
@@ -408,7 +407,7 @@ namespace ut64configurator
                                             string str2 = gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_EV).ToString("0.000");
                                             string str3 = gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_QV).ToString("0.000");
 
-                                            dataSavestr = dataSavestr + str1 + "," + str2 + "," + str3 + "\r\n";
+                                            dataSavestr = dataSavestr + str1 + "\t" + str2 + "\t " + str3 + "\r\n";
                                         }
 
                                         dataType = 20;
