@@ -61,8 +61,8 @@ namespace ut64configurator
         public const byte RUNTIME_FIELD_FULLANGEL_DBQ= 122;
         public const byte RUNTIME_FIELD_FULLANGEL_QV= 123;
         public const byte RUNTIME_FIELD_FULLANGEL_QVERROR = 124;
-        public const byte RUNTIME_FIELD_FULLANGEL_QA = 125;
-        public const byte RUNTIME_FIELD_FULLANGEL_QRATE = 126;
+        //public const byte RUNTIME_FIELD_FULLANGEL_QA = 125;
+        //public const byte RUNTIME_FIELD_FULLANGEL_QRATE = 126;
 
 
         // 2^29;角度标定值

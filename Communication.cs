@@ -315,7 +315,8 @@ namespace ut64configurator
                                         gyroBuffer1.setValue(Macro.RUNTIME_PID_CURRENT_OUTPUT, gyro1.getValue(Macro.RUNTIME_PID_CURRENT_OUTPUT));
 
                                         if (isDatasave == true)
-                                        {
+                                        {   
+
                                             string str1 = gyro1.getValue(Macro.RUNTIME_FIELD_AMP_CHB_I).ToString("0.000");
                                             string str2 = gyro1.getValue(Macro.RUNTIME_PID_CURRENT_OUTPUT).ToString("0.000");
 
@@ -375,15 +376,15 @@ namespace ut64configurator
                                         gyro1.setValue(Macro.RUNTIME_FIELD_FULLANGEL_QVERROR, deserialized_to_32(SerialRevDATA, 31));
                                         double DVQ = deserialized_to_32(SerialRevDATA, 35) * (2500 / 32768.0);    //currentoutput-全角PID输出；总驱动幅值
 
-                                        gyro1.setValue(Macro.RUNTIME_FIELD_FULLANGEL_QA, deserialized_to_32(SerialRevDATA, 39) / 1000.0);
-                                        gyroBuffer1.setValue(Macro.RUNTIME_FIELD_FULLANGEL_EA, gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_QA));   // 把QA 放入EA中，用于显示angle
+                                        gyro1.setValue(Macro.RUNTIME_FIELD_FULLANGEL_EA, deserialized_to_32(SerialRevDATA, 39) / 1000.0);
+                                        gyroBuffer1.setValue(Macro.RUNTIME_FIELD_FULLANGEL_EA, gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_EA));   // 把QA 放入EA中，用于显示angle
 
                                         gyro1.setValue(Macro.RUNTIME_FIELD_FULLANGEL_QV, deserialized_to_32(SerialRevDATA, 43));
                                         gyroBuffer1.setValue(Macro.RUNTIME_FIELD_FULLANGEL_QV, gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_QV));
                                         gyro1.setValue(Macro.RUNTIME_FIELD_FULLANGEL_EV, deserialized_to_32(SerialRevDATA, 47));
                                         gyroBuffer1.setValue(Macro.RUNTIME_FIELD_FULLANGEL_EV, gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_EV));
 
-                                        Angle = gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_QA);
+                                        Angle = gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_EA);
                                         Angle_rate = (Angle + Angle_Previou - 2 * Angle_Last) / 2;
                                         Angle_Previou = Angle_Last;
                                         Angle_Last = Angle;
@@ -398,7 +399,7 @@ namespace ut64configurator
                                             DB = DVQ * Math.Cos(Angle / 180 * Math.PI);
                                         }
 
-                                        gyro1.setValue(Macro.RUNTIME_FIELD_FULLANGEL_QRATE, Angle_rate);
+                                        gyro1.setValue(Macro.RUNTIME_FIELD_FULLANGEL_RATE, Angle_rate);
                                         gyro1.setValue(Macro.RUNTIME_FIELD_FULLANGEL_DAQ, DA);
                                         gyro1.setValue(Macro.RUNTIME_FIELD_FULLANGEL_DBQ, DB);
 

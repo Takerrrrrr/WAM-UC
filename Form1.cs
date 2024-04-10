@@ -19,6 +19,7 @@ using ScottPlot;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using ScottPlot.Renderable;
 
+
 namespace ut64configurator
 {
     public partial class Form1 : Form
@@ -57,6 +58,13 @@ namespace ut64configurator
         bool rb2 = true;
         bool rb3 = true;
 
+        //存数据
+        bool rb4 = true;
+        bool rb5 = true;
+        bool rb6 = true;
+        bool rb7 = true;
+        bool rb8 = true;
+        bool rb9 = true;
         //LED
         System.Timers.Timer timerLed;
 
@@ -64,7 +72,8 @@ namespace ut64configurator
         System.Timers.Timer timerDataSave;
         //sendbuffer
         private byte [] sendBuffers = { 0, 0, 0x24, 0x3E, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x24 };
-        
+
+        string dataSave = String.Empty;
 
 
         public Form1()
@@ -130,7 +139,7 @@ namespace ut64configurator
         {
             
             upDataGyro1();
-
+            datacombine();
 
 
        
@@ -248,9 +257,10 @@ namespace ut64configurator
         {
             storage_str = communication.getDataSaveStr();
             StreamWriter streamWriter = new StreamWriter(saveFileDialog.FileName, append: true);
-            streamWriter.Write(storage_str);
+            streamWriter.Write(dataSave);
             streamWriter.Close();
             storage_str = String.Empty;
+            dataSave = String.Empty;
             Event.setValue(4);
         }
 
@@ -467,9 +477,9 @@ namespace ut64configurator
                 case 20:
                     pidDAQuadG1_textBox.Text = gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_DAQ).ToString("0.000");
                     pidDBQuadG1_textBox.Text = gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_DBQ).ToString("0.000");
-                    pidQAangelG1_textBox.Text = gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_QA).ToString("0.000");
+                    pidQAangelG1_textBox.Text = gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_EA).ToString("0.000");
                     pidQVG1_textBox.Text = gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_QV).ToString("0.000");
-                    pidQRATEangelG1_textBox.Text = gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_QRATE).ToString("0.000");
+                    pidQRATEangelG1_textBox.Text = gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_RATE).ToString("0.000");
                     pidQVerrorG1_textBox.Text = gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_QVERROR).ToString("0.000");
                     gyroBuffer1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_EA).CopyTo(gyroPaint1.FA_EAngel_array, 0);
                     gyroBuffer1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_EV).CopyTo(gyroPaint1.FA_EV_array, 0);
@@ -595,6 +605,7 @@ namespace ut64configurator
                 rb3 = true;
             }
         }
+        
 
 
         private void G1_scanfre_button_Click(object sender, EventArgs e)//扫频发送
@@ -775,6 +786,7 @@ namespace ut64configurator
         {
             if (storage_button.Text == "开始保存")
             {
+
                 storage_str = String.Empty;
                 storage_button.Text = "停止保存";
                 saveFailName = DateTime.Now;
@@ -800,14 +812,17 @@ namespace ut64configurator
             else
             {
                 timerDataSave.Stop();
+                //storage_str = communication.getDataSaveStr();
                 storage_str = communication.getDataSaveStr();
                 StreamWriter streamWriter = new StreamWriter(saveFileDialog.FileName, append: true);
-                streamWriter.Write(storage_str);
+                streamWriter.Write(dataSave);
                 streamWriter.Close();
+
                 storage_button.Text = "开始保存";
    
                 storage_str = String.Empty;
-       
+                dataSave = String.Empty;
+
                 storage_OK = false;
                 Event.setValue(3);
                 Event.setValue(4);
@@ -1241,5 +1256,347 @@ namespace ut64configurator
         }
 
         
+
+        private void datacombine()
+        {
+            if (storage_OK)
+            {
+                saveFailName = DateTime.Now;
+                dataSave += saveFailName.Hour.ToString("00") + ":" + saveFailName.Minute.ToString("00") + ":" + saveFailName.Second.ToString("00") + "\t";
+                if (radioButton4.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_FIELD_AMP_CHA).ToString("0.000") + "\t"; }
+                if (radioButton5.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_FIELD_AMP_CHB).ToString("0.000") + "\t"; }
+                if (radioButton6.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_FIELD_AMP_CHA_I).ToString("0.000") + "\t"; }
+                if (radioButton7.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_FIELD_AMP_CHA_Q).ToString("0.000") + "\t"; }
+                if (radioButton8.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_FIELD_AMP_CHB_I).ToString("0.000") + "\t"; }
+                if (radioButton9.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_FIELD_AMP_CHB_Q).ToString("0.000") + "\t"; }
+                if (radioButton10.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_FIELD_PLL_CURRENT_ERROR).ToString("0.000") + "\t"; }
+                if (radioButton11.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_FIELD_PLL_CURRENT_PHASE).ToString("0.000") + "\t"; }
+                if (radioButton12.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_FIELD_PLL_CURRENT_FRE).ToString("0.000") + "\t"; }
+                if (radioButton13.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_EV).ToString("0.000") + "\t"; }
+                if (radioButton14.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_EA).ToString("0.000") + "\t"; }
+                if (radioButton15.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_PID_CURRENT_ERROR).ToString("0.000") + "\t"; }
+                if (radioButton16.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_PID_CURRENT_OUTPUT).ToString("0.000") + "\t"; }
+                if (radioButton17.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_PID_CURRENT_ERROR).ToString("0.000") + "\t"; }
+                if (radioButton18.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_PID_CURRENT_OUTPUT).ToString("0.000") + "\t"; }
+                if (radioButton19.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_PID_CURRENT_ERROR).ToString("0.000") + "\t"; }
+                if (radioButton20.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_PID_CURRENT_OUTPUT).ToString("0.000") + "\t"; }
+                if (radioButton21.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_PID_CURRENT_ERROR).ToString("0.000") + "\t"; }
+                if (radioButton22.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_PID_CURRENT_OUTPUT).ToString("0.000") + "\t"; }
+                if (radioButton23.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_EV).ToString("0.000") + "\t"; }
+                if (radioButton24.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_QV).ToString("0.000") + "\t"; }
+                if (radioButton25.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_EA).ToString("0.000") + "\t"; }
+                if (radioButton26.Checked)
+                { dataSave += gyro1.getValue(Macro.RUNTIME_FIELD_FULLANGEL_RATE).ToString("0.000") + "\t"; }
+
+                dataSave += "\r\n";
+            }
+        }
+
+        private void radioButton4_Click(object sender, EventArgs e)
+        {
+            if (rb4)
+            {
+                radioButton4.Checked = true;
+                rb4 = false;
+            }
+            else
+            {
+                radioButton4.Checked = false;
+                rb4 = true;
+            }
+        }
+
+        private void radioButton5_Click(object sender, EventArgs e)
+        {
+            if (rb5)
+            {
+                radioButton5.Checked = true;
+                rb5 = false;
+            }
+            else
+            {
+                radioButton5.Checked = false;
+                rb5 = true;
+            }
+        }
+        private void radioButton6_Click(object sender, EventArgs e)
+        {
+            if (rb6)
+            {
+                radioButton6.Checked = true;
+                rb6 = false;
+            }
+            else
+            {
+                radioButton6.Checked = false;
+                rb6 = true;
+            }
+        }
+
+        private void radioButton7_Click(object sender, EventArgs e)
+        {
+            if (rb7)
+            {
+                radioButton7.Checked = true;
+                rb7 = false;
+            }
+            else
+            {
+                radioButton7.Checked = false;
+                rb7 = true;
+            }
+        }
+        private void radioButton8_Click(object sender, EventArgs e)
+        {
+            if (rb8)
+            {
+                radioButton8.Checked = true;
+                rb8 = false;
+            }
+            else
+            {
+                radioButton8.Checked = false;
+                rb8 = true;
+            }
+        }
+        private void radioButton9_Click(object sender, EventArgs e)
+        {
+            if (rb9)
+            {
+                radioButton9.Checked = true;
+                rb9 = false;
+            }
+            else
+            {
+                radioButton9.Checked = false;
+                rb9 = true;
+            }
+        }
+        
+        private void radioButton10_Click(object sender, EventArgs e)
+        {
+            if (radioButton10.Checked)
+            {
+                radioButton10.Checked = false;
+            }
+            else
+            {
+                radioButton10.Checked = true;
+            }
+        }
+
+        private void radioButton11_Click(object sender, EventArgs e)
+        {
+            if (radioButton11.Checked)
+            {
+                radioButton11.Checked = false;
+            }
+            else
+            {
+                radioButton11.Checked = true;
+            }
+        }
+
+        private void radioButton12_Click(object sender, EventArgs e)
+        {
+            if (radioButton12.Checked)
+            {
+                radioButton12.Checked = false;
+            }
+            else
+            {
+                radioButton12.Checked = true;
+            }
+        }
+
+        private void radioButton13_Click(object sender, EventArgs e)
+        {
+            if (radioButton13.Checked)
+            {
+                radioButton13.Checked = false;
+            }
+            else
+            {
+                radioButton13.Checked = true;
+            }
+        }
+
+        private void radioButton14_Click(object sender, EventArgs e)
+        {
+            if (radioButton14.Checked)
+            {
+                radioButton14.Checked = false;
+            }
+            else
+            {
+                radioButton14.Checked = true;
+            }
+        }
+
+        private void radioButton15_Click(object sender, EventArgs e)
+        {
+            if (radioButton15.Checked)
+            {
+                radioButton15.Checked = false;
+            }
+            else
+            {
+                radioButton15.Checked = true;
+            }
+        }
+
+        private void radioButton16_Click(object sender, EventArgs e)
+        {
+            if (radioButton16.Checked)
+            {
+                radioButton16.Checked = false;
+            }
+            else
+            {
+                radioButton16.Checked = true;
+            }
+        }
+
+        private void radioButton17_Click(object sender, EventArgs e)
+        {
+            if (radioButton17.Checked)
+            {
+                radioButton17.Checked = false;
+            }
+            else
+            {
+                radioButton17.Checked = true;
+            }
+        }
+
+        private void radioButton18_Click(object sender, EventArgs e)
+        {
+            if (radioButton18.Checked)
+            {
+                radioButton18.Checked = false;
+            }
+            else
+            {
+                radioButton18.Checked = true;
+            }
+        }
+
+        private void radioButton19_Click(object sender, EventArgs e)
+        {
+            if (radioButton19.Checked)
+            {
+                radioButton19.Checked = false;
+            }
+            else
+            {
+                radioButton19.Checked = true;
+            }
+        }
+
+        private void radioButton20_Click(object sender, EventArgs e)
+        {
+            if (radioButton20.Checked)
+            {
+                radioButton20.Checked = false;
+            }
+            else
+            {
+                radioButton20.Checked = true;
+            }
+        }
+
+        private void radioButton21_Click(object sender, EventArgs e)
+        {
+            if (radioButton21.Checked)
+            {
+                radioButton21.Checked = false;
+            }
+            else
+            {
+                radioButton21.Checked = true;
+            }
+        }
+
+        private void radioButton22_Click(object sender, EventArgs e)
+        {
+            if (radioButton22.Checked)
+            {
+                radioButton22.Checked = false;
+            }
+            else
+            {
+                radioButton22.Checked = true;
+            }
+        }
+
+        private void radioButton23_Click(object sender, EventArgs e)
+        {
+            if (radioButton23.Checked)
+            {
+                radioButton23.Checked = false;
+            }
+            else
+            {
+                radioButton23.Checked = true;
+            }
+        }
+
+        private void radioButton24_Click(object sender, EventArgs e)
+        {
+            if (radioButton24.Checked)
+            {
+                radioButton24.Checked = false;
+            }
+            else
+            {
+                radioButton24.Checked = true;
+            }
+        }
+
+        private void radioButton25_Click(object sender, EventArgs e)
+        {
+            if (radioButton25.Checked)
+            {
+                radioButton25.Checked = false;
+            }
+            else
+            {
+                radioButton25.Checked = true;
+            }
+        }
+
+        private void radioButton26_Click(object sender, EventArgs e)
+        {
+            if (radioButton26.Checked)
+            {
+                radioButton26.Checked = false;
+            }
+            else
+            {
+                radioButton26.Checked = true;
+            }
+        }
     }
 }

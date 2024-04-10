@@ -62,10 +62,10 @@ namespace ut64configurator
         //正交控制
         private double ampDAQ = 0;
         private double ampDBQ = 0;
-        private double gyroangelQ = 0;
+        //private double gyroangelQ = 0;
         private double gyropowerQ = 0;
         private double gyropowererrorQ = 0;
-        private double gyroangelrateQ = 0;
+        //private double gyroangelrateQ = 0;
 
 
 
@@ -144,14 +144,14 @@ namespace ut64configurator
                     return ampDAQ;
                 case Macro.RUNTIME_FIELD_FULLANGEL_DBQ:
                     return ampDBQ;
-                case Macro.RUNTIME_FIELD_FULLANGEL_QA:
-                    return gyroangelQ;
+                //case Macro.RUNTIME_FIELD_FULLANGEL_QA:
+                //    return gyroangelQ;
                 case Macro.RUNTIME_FIELD_FULLANGEL_QV:
                     return gyropowerQ;
                 case Macro.RUNTIME_FIELD_FULLANGEL_QVERROR:
                     return gyropowererrorQ;
-                case Macro.RUNTIME_FIELD_FULLANGEL_QRATE:
-                    return gyroangelrateQ;
+                //case Macro.RUNTIME_FIELD_FULLANGEL_QRATE:
+                //    return gyroangelrateQ;
                 default:
                     return 0;
             }
@@ -264,18 +264,18 @@ namespace ut64configurator
                 case Macro.RUNTIME_FIELD_FULLANGEL_DBQ:
                     ampDBQ = value;
                     break;
-                case Macro.RUNTIME_FIELD_FULLANGEL_QA:
-                    gyroangelQ = value;
-                    break;
+                //case Macro.RUNTIME_FIELD_FULLANGEL_QA:
+                //    gyroangelQ = value;
+                //    break;
                 case Macro.RUNTIME_FIELD_FULLANGEL_QV:
                     gyropowerQ = value;
                     break;
                 case Macro.RUNTIME_FIELD_FULLANGEL_QVERROR:
                     gyropowererrorQ = value;
                     break;
-                case Macro.RUNTIME_FIELD_FULLANGEL_QRATE:
-                    gyroangelrateQ = value;
-                    break;
+                //case Macro.RUNTIME_FIELD_FULLANGEL_QRATE:
+                //    gyroangelrateQ = value;
+                //    break;
                 default:
                     break;
             }
